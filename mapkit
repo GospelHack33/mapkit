@@ -1,0 +1,272 @@
+#!/bin/python3
+import os
+import subprocess
+from colorama import Fore
+import socket
+import time
+
+if os.name == 'posix':
+   pass
+else:
+   print(Fore.YELLOW+'\n [+] Unable To Start Mapkit... OS Not Surported!!!\n'+Fore.WHITE)
+   exit(1)
+
+print(Fore.GREEN+'\n[*] STarting Mapkit Shell...'+Fore.WHITE)
+time.sleep(2)
+os.system('clear')
+
+def screen():
+    output = '''
+______________________________________________________________________________
+|                                                                              |
+|                   NMAP CYBER UTILITY TOOLKIT CIDSP V2                        |
+|______________________________________________________________________________|
+      \                                  /                      /
+       \     .                          /                      /            x
+        \                              /                      /
+         \                            /          +           /
+          \            +             /                      /
+           *                        /                      /
+        
+       =[ mapkit v2.0.15 ]
++ -- --=[ Developer - @GospelChukwunonso ]
++ -- --=[ @CyberFortress ]
++ -- --=[ Type HELP To Get STarted ]
+
+'''
+    print(output)
+
+def help():
+    print(Fore.YELLOW+'\n [+] search <service name> ----- search for a specific service ( ftp, ssh, http, others )'+Fore.WHITE)
+    print(Fore.YELLOW+'\n [+] show services ----- show all available services installed in mapkit\n'+Fore.WHITE)
+    print(Fore.YELLOW+' [+] info <module name> ----- see the information about the module\n'+Fore.WHITE)
+    print(Fore.YELLOW+' [+] use <module name> ----- select a module\n'+Fore.WHITE)
+    print(Fore.YELLOW+' [+] host <ip address / domain name> ----- specify the target ip address / domain\n'+Fore.WHITE)
+    print(Fore.YELLOW+' [+] port <port number> ----- specify the port to use\n'+Fore.WHITE)
+    print(Fore.YELLOW+' [+] run / exploit ----- launch attack\n'+Fore.WHITE)
+
+def execute_cmd(cmd_to_execute):
+    if cmd_to_execute == 'help' or cmd_to_execute == 'HELP':
+       help()
+    if cmd_to_execute == 'exit' or cmd_to_execute == 'quit':
+       cr_mod = open('logs/module.log', 'w').write('')
+       exit(0)
+    elif cmd_to_execute[:13] == 'show services':
+         services_lst = 'dns http imap pop3 rpc smtp ssh vnc ftp https mysql rdp smb snmp telnet'.split()
+         count = 0
+         print(Fore.YELLOW+'\n [-] List Of Services Available In Mapkit...'+Fore.WHITE)
+         for serv in services_lst:
+             count+=1
+             print(Fore.BLUE+f'\n [-{count}-] {serv}\n'+Fore.WHITE) 
+    elif cmd_to_execute == 'clear':
+         os.system('clear')
+    
+    elif cmd_to_execute[:6] == 'search':
+         srv = cmd_to_execute[6:]
+         if srv == ' ftp':
+            ftpcount = 0
+            ftpl = open('services/ftp', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' ssh':
+            ftpcount = 0
+            ftpl = open('services/ssh', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' dns':
+            ftpcount = 0
+            ftpl = open('services/dns', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' http':
+            ftpcount = 0
+            ftpl = open('services/http', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' imap':
+            ftpcount = 0
+            ftpl = open('services/imap', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' pop3':
+            ftpcount = 0
+            ftpl = open('services/pop3', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' rpc':
+            ftpcount = 0
+            ftpl = open('services/rpc', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' smtp':
+            ftpcount = 0
+            ftpl = open('services/smtp', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' vnc':
+            ftpcount = 0
+            ftpl = open('services/vnc', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' https':
+            ftpcount = 0
+            ftpl = open('services/https', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' mysql':
+            ftpcount = 0
+            ftpl = open('services/mysql', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' rdp':
+            ftpcount = 0
+            ftpl = open('services/rdp', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' smb':
+            ftpcount = 0
+            ftpl = open('services/smb', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' snmp':
+            ftpcount = 0
+            ftpl = open('services/snmp', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+         if srv == ' telnet':
+            ftpcount = 0
+            ftpl = open('services/telnet', 'r').readlines()
+            for ft in ftpl:
+                ftpcount+=1
+                print(Fore.YELLOW+f'\n [-Module-{ftpcount}-] {ft}\n'+Fore.WHITE)
+    elif cmd_to_execute[:4] == 'info':
+         module_info = cmd_to_execute[4:]
+         try:
+             show_info = subprocess.check_output(f'nmap --script-help {module_info}', shell=True)
+             print(Fore.YELLOW+f'\n [-] {show_info.decode()}\n'+Fore.WHITE)
+         except subprocess.CalledProcessError:
+             print(Fore.RED+'[!] Module Error - Unable To Get Info\n'+Fore.WHITE)
+    elif cmd_to_execute[:3] == 'use':
+         mod_to_use = cmd_to_execute[3:]
+         wr_mod = open('logs/module.log', 'w').write(mod_to_use)
+         print(Fore.GREEN+f'\n [+] Module ==> {mod_to_use}\n'+Fore.WHITE)
+         print(Fore.GREEN+' [+] Module Loaded... ( Type <back>, then add a host using - host <ip address / domain )\n'+Fore.WHITE)
+         print(Fore.GREEN+' [!] Make Sure A Valid Module Is Set, So To Prevent Errors When Launching Attack!!!\n'+Fore.WHITE)
+         def shell_nw():
+             global mod_to_use
+             try:
+                 mod_to_use = cmd_to_execute[3:]
+                 while True:
+                       shell_n = input(f'mapkit [{mod_to_use} ]> ')
+                       if shell_n == 'exit' or shell_n == 'quit':
+                          cr_mod = open('logs/module.log', 'w').write('')
+                          exit(0)
+                       elif shell_n == 'back':
+                            def shell():
+                                try:
+                                    while True:
+                                          shell = input('mapkit> ')
+                                          execute_cmd(shell)
+                                except KeyboardInterrupt:
+                                       pass
+                            shell()
+                       
+             except KeyboardInterrupt:
+                    pass
+         shell_nw()
+    
+    elif cmd_to_execute[:4] == 'host':
+         ip_dom = cmd_to_execute[4:]
+         wr_ip_dom = open('logs/data.log', 'w').write(ip_dom)
+         print(Fore.GREEN+f'\n [+] Host ==> {ip_dom}\n'+Fore.WHITE)
+         print(Fore.GREEN+' [+] Host Added... ( Type <back>, then add a port using - port <port number> )\n'+Fore.WHITE)
+         def shell_nw_ip():
+             mod_to_use = open('logs/module.log', 'r').read()
+             global ip_dom
+             try:
+                 ip_dom = cmd_to_execute[4:]
+                 while True:
+                       shell_n_ip = input(f'mapkit [{mod_to_use} ][{ip_dom}:80 ]> ')
+                       if shell_n_ip == 'exit' or shell_n_ip == 'quit':
+                          exit(0)
+                       elif shell_n_ip == 'back':
+                            def shell():
+                                try:
+                                    while True:
+                                          shell = input('mapkit> ')
+                                          execute_cmd(shell)
+                                except KeyboardInterrupt:
+                                       pass
+                            shell()
+                       
+             except KeyboardInterrupt:
+                    pass
+         shell_nw_ip()
+
+    elif cmd_to_execute[:4] == 'port':
+         port_dom = cmd_to_execute[4:]
+         wr_port_dom = open('logs/port.log', 'w').write(port_dom)
+         print(Fore.GREEN+f'\n [+] Port ==> {port_dom}\n'+Fore.WHITE)
+         print(Fore.GREEN+' [+] Port Added... ( Type <run> / <exploit> To Launch )\n'+Fore.WHITE)
+         def shell_nw_port():
+             mod_to_use = open('logs/module.log', 'r').read()
+             ip_dom = open('logs/data.log', 'r').read()
+             global port_dom
+             try:
+                 port_dom = cmd_to_execute[4:]
+                 while True:
+                       shell_n_ip = input(f'mapkit [{mod_to_use} ][{ip_dom}:{port_dom} ]> ')
+                       if shell_n_ip == 'run' or shell_n_ip == 'exploit':                
+                          module = open('logs/module.log', 'r').read()
+                          target = open('logs/data.log', 'r').read()
+                          port = open('logs/port.log', 'r').read()
+                          print()
+                          subprocess.run(f'nmap -sV -p{port} --script {module} {target}', shell=True)
+                          print()
+                       if shell_n_ip == 'exit' or shell_n_ip == 'quit':
+                          exit(0)
+                       elif shell_n_ip == 'back':
+                            def shell():
+                                try:
+                                    while True:
+                                          shell = input('mapkit> ')
+                                          execute_cmd(shell)
+                                except KeyboardInterrupt:
+                                       pass
+                            shell()
+                       
+             except KeyboardInterrupt:
+                    pass
+         shell_nw_port()
+
+def shell():
+    try:
+        while True:
+              shell = input('mapkit> ')
+              execute_cmd(shell)
+    except KeyboardInterrupt:
+        pass
+
+class mapkit:
+      def start():
+          screen()
+          shell()
+
+
+mapkit.start()
+
+
